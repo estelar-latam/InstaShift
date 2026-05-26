@@ -46,7 +46,7 @@ class FiltrosCog(commands.Cog, name="Filtros"):
 
     # ── /filtro add ────────────────────────────────────────────────────────────
 
-    @filtro_group.command(
+    @self.filtro_group.command(
         name="add",
         description="Agregar un filtro (hashtag, mención o palabra clave) a un feed.",
     )
@@ -103,7 +103,7 @@ class FiltrosCog(commands.Cog, name="Filtros"):
 
     # ── /filtro remove ────────────────────────────────────────────────────────
 
-    @filtro_group.command(
+    @self.filtro_group.command(
         name="remove",
         description="Eliminar un filtro por su ID.",
     )
@@ -142,7 +142,7 @@ class FiltrosCog(commands.Cog, name="Filtros"):
 
     # ── /filtro list ──────────────────────────────────────────────────────────
 
-    @filtro_group.command(
+    @self.filtro_group.command(
         name="list",
         description="Listar todos los filtros de un feed.",
     )
@@ -214,4 +214,6 @@ class FiltrosCog(commands.Cog, name="Filtros"):
 
 async def setup(bot: commands.Bot) -> None:
     """Registra el cog en el bot. Llamada automáticamente por load_extension()."""
-    await bot.add_cog(FiltrosCog(bot))
+    cog = FiltrosCog(bot)
+    bot.tree.add_command(cog.filtro_group)
+    await bot.add_cog(cog)
