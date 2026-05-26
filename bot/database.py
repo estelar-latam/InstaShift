@@ -75,6 +75,20 @@ async def init_db() -> None:
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
             """)
 
+            # Crear tabla de filtros si no existe
+            await cur.execute("""
+                CREATE TABLE IF NOT EXISTS instaswift_filters (
+                    id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                    feed_id     INT UNSIGNED NOT NULL,
+                    filter_type VARCHAR(50) NOT NULL,
+                    filter_value VARCHAR(255) NOT NULL,
+                    active      TINYINT DEFAULT 1,
+                    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    INDEX idx_feed_id (feed_id),
+                    INDEX idx_active (active)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+            """)
+
     log.info("[DB] MySQL listo. Pool creado (min=1, max=5).")
 
 
@@ -176,6 +190,141 @@ async def mark_as_posted(feed_id: int, media_id: str) -> None:
 
 
 # ══════════════════════════════════════════════════════════════════════════════
+# Gestión de feeds (CRUD)
+# ══════════════════════════════════════════════════════════════════════════════
+
+async def add_feed(
+    guild_id: int,
+    instagram_account: str,
+    channel_id: int,
+    thread_id: Optional[int] = None,
+    role_id: Optional[int] = None,
+) -> Optional[int]:
+    """
+    Agrega un nuevo feed a la base de datos.
+    Retorna el ID del feed creado, o None si ya existe.
+    """
+    async with _get_pool().acquire() as conn:
+        async with conn.cursor() as cur:
+            try:
+                await cur.execute(
+                    """INSERT INTO instaswift_feeds
+                       (guild_id, ig_account, channel_id, thread_id, role_id, active)
+                       VALUES (%s, %s, %s, %s, %s, 1)""",
+                    (guild_id, instagram_account, channel_id, thread_id, role_id),
+                )
+                return cur.lastrowid
+            except Exception as e:
+                log.debug("[DB] Error al agregar feed: %s", e)
+                return None
+
+
+async def remove_feed(
+    guild_id: int,
+    instagram_account: str,
+    channel_id: int,
+) -> bool:
+    """
+    Elimina un feed de la base de datos.
+    Retorna True si se eliminó, False si no se encontró.
+    """
+    async with _get_pool().acquire() as conn:
+        async with conn.cursor() as cur:
+            await cur.execute(
+                """DELETE FROM instaswift_feeds
+                   WHERE guild_id = %s AND ig_account = %s AND channel_id = %s""",
+                (guild_id, instagram_account, channel_id),
+            )
+            return cur.rowcount > 0
+
+
+async def pause_feed(feed_id: int) -> bool:
+    """
+    Pausa un feed (active = 0).
+    Retorna True si se pausó, False si no se encontró.
+    """
+    async with _get_pool().acquire() as conn:
+        async with conn.cursor() as cur:
+            await cur.execute(
+                "UPDATE instaswift_feeds SET active = 0 WHERE id = %s",
+                (feed_id,),
+            )
+            return cur.rowcount > 0
+
+
+async def resume_feed(feed_id: int) -> bool:
+    """
+    Reanuda un feed pausado (active = 1).
+    Retorna True si se reanudó, False si no se encontró.
+    """
+    async with _get_pool().acquire() as conn:
+        async with conn.cursor() as cur:
+            await cur.execute(
+                "UPDATE instaswift_feeds SET active = 1 WHERE id = %s",
+                (feed_id,),
+            )
+            return cur.rowcount > 0
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# Gestión de filtros
+# ══════════════════════════════════════════════════════════════════════════════
+
+async def add_filter(
+    feed_id: int,
+    filter_type: str,  # 'hashtag', 'mention', 'keyword'
+    filter_value: str,
+) -> Optional[int]:
+    """
+    Agrega un filtro a un feed.
+    Retorna el ID del filtro creado, o None si hay error.
+    """
+    async with _get_pool().acquire() as conn:
+        async with conn.cursor() as cur:
+            try:
+                await cur.execute(
+                    """INSERT INTO instaswift_filters
+                       (feed_id, filter_type, filter_value, active)
+                       VALUES (%s, %s, %s, 1)""",
+                    (feed_id, filter_type, filter_value),
+                )
+                return cur.lastrowid
+            except Exception as e:
+                log.debug("[DB] Error al agregar filtro: %s", e)
+                return None
+
+
+async def remove_filter(filter_id: int) -> bool:
+    """
+    Elimina un filtro por su ID.
+    Retorna True si se eliminó, False si no se encontró.
+    """
+    async with _get_pool().acquire() as conn:
+        async with conn.cursor() as cur:
+            await cur.execute(
+                "DELETE FROM instaswift_filters WHERE id = %s",
+                (filter_id,),
+            )
+            return cur.rowcount > 0
+
+
+async def get_filters(feed_id: int) -> list[dict]:
+    """
+    Obtiene todos los filtros activos de un feed.
+    """
+    async with _get_pool().acquire() as conn:
+        async with conn.cursor(aiomysql.DictCursor) as cur:
+            await cur.execute(
+                """SELECT id, feed_id, filter_type, filter_value, created_at
+                   FROM instaswift_filters
+                   WHERE feed_id = %s AND active = 1
+                   ORDER BY id""",
+                (feed_id,),
+            )
+            return await cur.fetchall()
+
+
+# ══════════════════════════════════════════════════════════════════════════════
 # Estadísticas
 # ══════════════════════════════════════════════════════════════════════════════
 
@@ -209,3 +358,38 @@ async def log_stat_command(guild_id: int, command_name: str) -> None:
                    VALUES (%s, %s)""",
                 (guild_id, command_name),
             )
+
+
+async def get_stats_posts(guild_id: int, days: int = 7) -> dict:
+    """
+    Obtiene estadísticas de publicaciones de los últimos N días.
+    """
+    async with _get_pool().acquire() as conn:
+        async with conn.cursor(aiomysql.DictCursor) as cur:
+            await cur.execute(
+                """SELECT content_type, COUNT(*) as total
+                   FROM instaswift_stats_posts
+                   WHERE guild_id = %s AND created_at >= DATE_SUB(NOW(), INTERVAL %s DAY)
+                   GROUP BY content_type""",
+                (guild_id, days),
+            )
+            rows = await cur.fetchall()
+            return {row['content_type']: row['total'] for row in rows}
+
+
+async def get_stats_commands(guild_id: int, days: int = 7) -> dict:
+    """
+    Obtiene estadísticas de comandos usados en los últimos N días.
+    """
+    async with _get_pool().acquire() as conn:
+        async with conn.cursor(aiomysql.DictCursor) as cur:
+            await cur.execute(
+                """SELECT command_name, COUNT(*) as total
+                   FROM instaswift_stats_commands
+                   WHERE guild_id = %s AND created_at >= DATE_SUB(NOW(), INTERVAL %s DAY)
+                   GROUP BY command_name
+                   ORDER BY total DESC""",
+                (guild_id, days),
+            )
+            rows = await cur.fetchall()
+            return {row['command_name']: row['total'] for row in rows}

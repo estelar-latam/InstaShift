@@ -121,7 +121,9 @@ TEST_GUILD: discord.Object | None = (
 # IMPORTANTE: Cada archivo DEBE tener una funcion "async def setup(bot)" al final.
 EXTENSIONS: list[str] = [
     "bot.cogs.instagram_scraper",  # Scraper + /preview + /instagram_status
-    "bot.cogs.feeds",              # /follow /unfollow /list /dashboard /checknow /sync
+    "bot.cogs.feeds",              # /feed add/list/remove/pause/resume + /dashboard /checknow /sync
+    "bot.cogs.filtros",            # /filtro add/list/remove
+    "bot.cogs.utilidad",           # /ayuda /plan /stats
 ]
 
 
