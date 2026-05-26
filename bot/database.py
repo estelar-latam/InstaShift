@@ -136,11 +136,11 @@ async def get_feeds(guild_id: int) -> list[dict]:
 
 
 async def update_last_media_id(feed_id: int, media_id: str) -> None:
-        """
-            No-op compatible: la BD del panel no tiene campo last_media_id.
-                El anti-duplicados real se gestiona con instaswift_posted_media.
-                    Se mantiene esta firma para no romper las llamadas existentes del scraper.
-                        """
+    """
+    No-op compatible: la BD del panel no tiene campo last_media_id.
+    El anti-duplicados real se gestiona con instaswift_posted_media.
+    Se mantiene esta firma para no romper las llamadas existentes del scraper.
+    """
     pass
 
 
