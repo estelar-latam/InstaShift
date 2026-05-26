@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git ls-remote *)",
+      "Bash(git clone *)",
+      "Bash(dir repo_temp)",
+      "Bash(ls -la \"C:\\\\Users\\\\Douglas Velez\\\\OneDrive\\\\Escritorio\\\\Instaswift\\\\\")"
+    ]
+  }
+}

@@ -1,0 +1,155 @@
+================================================================================
+   🍪 INSTAGRAM COOKIES EXTRACTOR - GUÍA DE INSTALACIÓN RÁPIDA
+================================================================================
+
+PASO 1: ABRIR CHROME
+────────────────────────────────────────────────────────────────────────────
+Abre Google Chrome en tu computadora.
+
+
+PASO 2: IR A EXTENSIONES
+────────────────────────────────────────────────────────────────────────────
+Copia y pega esto en la barra de direcciones:
+   chrome://extensions/
+
+O ve manualmente a:
+   Menú (⋮) → Más herramientas → Extensiones
+
+
+PASO 3: ACTIVAR MODO DE DESARROLLADOR
+────────────────────────────────────────────────────────────────────────────
+Busca en la esquina superior derecha el toggle "Modo de desarrollador"
+Haz clic para activarlo (debe ponerse AZUL)
+
+
+PASO 4: CARGAR LA EXTENSIÓN
+────────────────────────────────────────────────────────────────────────────
+Aparecerá un botón "Cargar extensión sin empaquetar" en la esquina superior izquierda
+Haz clic en ese botón
+
+
+PASO 5: SELECCIONAR LA CARPETA
+────────────────────────────────────────────────────────────────────────────
+Se abrirá una ventana de selección de carpeta
+Navega a esta ubicación:
+   C:\Users\Douglas Velez\OneDrive\Escritorio\Instaswift\instagram-cookies-extractor
+
+Selecciona esa carpeta y haz clic en "Seleccionar carpeta"
+
+
+PASO 6: VERIFICAR LA INSTALACIÓN
+────────────────────────────────────────────────────────────────────────────
+✅ Si todo funcionó correctamente:
+   - Deberías ver "Instagram Cookies Extractor" en la lista de extensiones
+   - El icono 🍪 aparecerá en la barra de herramientas de Chrome
+   - Bajo el nombre debe decir "Cargada" (en desarrollo)
+
+
+================================================================================
+   CÓMO USAR LA EXTENSIÓN
+================================================================================
+
+1️⃣ ABRIR INSTAGRAM
+   Ve a https://www.instagram.com
+   Asegúrate de estar logueado en tu cuenta
+
+
+2️⃣ ABRIR LA EXTENSIÓN
+   Haz clic en el icono 🍪 en la barra de herramientas
+
+
+3️⃣ ESPERAR A QUE CARGUE
+   La extensión buscará automáticamente:
+   ✓ Cookies de sesión
+   ✓ Tu User ID
+   ✓ Tu username
+
+
+4️⃣ ELEGIR UNA OPCIÓN
+
+   Opción A - COPIAR:
+   - Haz clic en "📋 Copiar JSON"
+   - El JSON se copiará al portapapeles
+   - Úsalo directamente en InstaSwift
+
+   Opción B - DESCARGAR:
+   - Haz clic en "⬇️ Descargar JSON"
+   - Se descargará un archivo JSON
+   - Guárdalo en un lugar seguro
+   - Úsalo en InstaSwift
+
+
+================================================================================
+   ⚠️ INFORMACIÓN IMPORTANTE
+================================================================================
+
+🔒 PRIVACIDAD:
+   ✓ Todo se procesa localmente en tu navegador
+   ✓ Nada se envía a servidores externos
+   ✓ Solo funciona en instagram.com
+
+⚠️ SEGURIDAD:
+   ✓ No compartas el archivo JSON
+   ✓ Es como compartir tu contraseña
+   ✓ Guárdalo en un lugar privado
+   ✓ Solo usalo en plataformas confiables
+
+📋 REQUISITOS:
+   ✓ Debes estar logueado en Instagram
+   ✓ Chrome versión 88 o superior
+   ✓ Acceso a Instagram
+
+⏰ NOTA:
+   Las cookies expiran con el tiempo. Si no funcionan después de varios días,
+   extrae nuevas cookies usando esta extensión nuevamente.
+
+
+================================================================================
+   SOLUCIONAR PROBLEMAS
+================================================================================
+
+❌ "La extensión no muestra datos"
+   → Recarga Instagram (F5)
+   → Asegúrate de estar logueado
+   → Cierra y vuelve a abrir el popup
+
+
+❌ "El icono no aparece"
+   → Verifica que esté habilitada en chrome://extensions/
+   → Busca el icono de extensiones (rompecabezas) y fija la extensión
+
+
+❌ "No puedo descargar"
+   → Intenta copiar el JSON en su lugar
+   → Revisa tu carpeta de Descargas
+   → Reinicia Chrome
+
+
+❌ "Dice 'No disponible' en algún campo"
+   → Es normal, especialmente si no estás en tu perfil
+   → Las cookies son lo más importante
+   → Puedes escribir el username manualmente
+
+
+❌ "Chrome dice que es una extensión no verificada"
+   → Es normal en modo desarrollador
+   → No es un virus ni algo peligroso
+   → Simplemente usa la extensión normalmente
+
+
+================================================================================
+   PRÓXIMOS PASOS
+================================================================================
+
+1. Lee el archivo README.md para más detalles
+2. Prueba la extensión en Instagram
+3. Usa el JSON en InstaSwift
+4. Guarda el archivo en un lugar seguro
+
+¡Disfruta! 🚀
+
+
+================================================================================
+Última actualización: 26 de Mayo de 2026
+Versión: 1.0.0
+================================================================================

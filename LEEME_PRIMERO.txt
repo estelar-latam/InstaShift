@@ -1,0 +1,201 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                                                            ║
+║               🍪 INSTAGRAM COOKIES EXTRACTOR PARA INSTASWIFT              ║
+║                                                                            ║
+║                    ¡BIENVENIDO! LEE ESTO PRIMERO                         ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+¡Hola! Acabamos de crear una extensión de Chrome que extrae automáticamente
+tus cookies de Instagram, User ID y username para usarlos en InstaSwift.
+
+📁 UBICACIÓN DE LOS ARCHIVOS
+════════════════════════════════════════════════════════════════════════════
+
+Todos los archivos de la extensión se encuentran aquí:
+
+    C:\Users\Douglas Velez\OneDrive\Escritorio\Instaswift\instagram-cookies-extractor\
+
+Dentro encontrarás:
+    ✓ manifest.json                    ← Configuración de la extensión
+    ✓ popup.html                       ← Interfaz visual
+    ✓ popup.js                         ← Lógica principal
+    ✓ content.js                       ← Script de Instagram
+    ✓ background.js                    ← Procesos en segundo plano
+    ✓ README.md                        ← Documentación completa
+    ✓ INSTRUCCIONES_INSTALACION.txt   ← Guía de instalación
+    ✓ VERIFICACION.md                 ← Checklist de verificación
+
+
+🚀 INSTALACIÓN RÁPIDA (5 PASOS)
+════════════════════════════════════════════════════════════════════════════
+
+PASO 1: Abre Google Chrome
+
+PASO 2: Escribe en la barra de direcciones:
+        chrome://extensions/
+
+PASO 3: En la esquina superior derecha, activa "Modo de Desarrollador"
+        (El toggle debe estar AZUL)
+
+PASO 4: Haz clic en "Cargar extensión sin empaquetar" (esquina superior izq.)
+
+PASO 5: Selecciona la carpeta:
+        C:\Users\Douglas Velez\OneDrive\Escritorio\Instaswift\instagram-cookies-extractor\
+
+        Haz clic en "Seleccionar carpeta"
+
+✅ ¡LISTO! El icono 🍪 aparecerá en tu Chrome
+
+
+💡 CÓMO USAR LA EXTENSIÓN
+════════════════════════════════════════════════════════════════════════════
+
+1. Abre Instagram: https://www.instagram.com
+   (Asegúrate de estar logueado)
+
+2. Haz clic en el icono 🍪 en la barra de herramientas de Chrome
+
+3. La extensión extraerá automáticamente:
+   ✓ Tus cookies de sesión
+   ✓ Tu User ID
+   ✓ Tu username
+
+4. Elige una opción:
+
+   📋 COPIAR JSON
+      Haz clic en "Copiar JSON"
+      → Se copia automáticamente al portapapeles
+      → Úsalo directamente en InstaSwift
+
+   ⬇️ DESCARGAR JSON
+      Haz clic en "Descargar JSON"
+      → Se descargará un archivo
+      → Guárdalo en un lugar seguro
+      → Úsalo en InstaSwift
+
+
+⚠️ COSAS MUY IMPORTANTES
+════════════════════════════════════════════════════════════════════════════
+
+🔒 PRIVACIDAD
+   ✓ Todo se procesa EN TU NAVEGADOR
+   ✓ Nada se envía a internet ni a servidores externos
+   ✓ Las cookies NO abandonan tu computadora
+   ✓ Está 100% protegido
+
+⚠️ SEGURIDAD
+   ✗ NO compartas el archivo JSON con nadie
+   ✗ Es como compartir tu contraseña
+   ✗ Guárdalo en un lugar privado
+   ✗ Solo usalo en InstaSwift
+
+✓ REQUISITOS
+   ✓ Debes estar logueado en Instagram
+   ✓ Chrome versión 88 o superior
+   ✓ Conexión a Internet
+
+
+📖 DOCUMENTACIÓN
+════════════════════════════════════════════════════════════════════════════
+
+Para información más detallada, lee:
+
+   README.md
+   ├─ Descripción completa
+   ├─ Características
+   ├─ Instalación paso a paso
+   ├─ Cómo usar
+   ├─ Privacidad y seguridad
+   ├─ Solucionar problemas
+   └─ Preguntas frecuentes
+
+   INSTRUCCIONES_INSTALACION.txt
+   └─ Guía rápida de instalación
+
+   VERIFICACION.md
+   └─ Checklist de todo lo que está incluido
+
+
+❓ SI ALGO NO FUNCIONA
+════════════════════════════════════════════════════════════════════════════
+
+Problema: "No veo datos en la extensión"
+Solución:
+   1. Abre Instagram completamente (espera a que cargue)
+   2. Recarga la página (presiona F5)
+   3. Cierra el popup de la extensión
+   4. Abre el popup nuevamente
+
+Problema: "No veo el icono de la extensión"
+Solución:
+   1. Ve a chrome://extensions/
+   2. Asegúrate que esté habilitada
+   3. Busca el icono de extensiones (pieza de rompecabezas)
+   4. Fija la extensión a la barra de herramientas
+
+Problema: "No puedo descargar el archivo"
+Solución:
+   1. Intenta copiar el JSON en su lugar
+   2. Revisa tu carpeta de Descargas
+   3. Prueba una carpeta diferente para descargar
+
+Para más problemas, lee el README.md
+
+
+📝 IMPORTANTE
+════════════════════════════════════════════════════════════════════════════
+
+✓ Las cookies expiran - tendrás que usar la extensión nuevamente después
+  de algunos días si las cookies se vuelven inactivas
+
+✓ Chrome puede mostrar "Extensión no verificada" - es normal en modo
+  desarrollador, no es peligrosa
+
+✓ El archivo JSON descargado contiene datos sensibles - guárdalo bien
+
+✓ Solo para uso personal - no accedas a cuentas ajenas
+
+
+🎯 PRÓXIMOS PASOS
+════════════════════════════════════════════════════════════════════════════
+
+1. ✅ Lee este archivo (ya lo estás haciendo)
+2. ⏭️ Sigue los 5 pasos de instalación
+3. 🌐 Abre Instagram
+4. 🍪 Haz clic en el icono de la extensión
+5. 💾 Copia o descarga el JSON
+6. 🚀 Usa el JSON en InstaSwift
+
+
+💬 RESUMEN
+════════════════════════════════════════════════════════════════════════════
+
+Has recibido una extensión de Chrome completamente funcional que:
+
+✓ Extrae cookies de Instagram automáticamente
+✓ Obtiene tu User ID
+✓ Detecta tu username
+✓ Procesa todo localmente
+✓ No envía datos a servidores
+✓ Tiene interfaz moderna y fácil de usar
+✓ Viene con documentación completa
+✓ Está lista para usar sin configuración adicional
+
+¡Solo tienes que cargarla en Chrome y ¡listo!
+
+
+════════════════════════════════════════════════════════════════════════════
+
+Si tienes dudas, abre README.md o INSTRUCCIONES_INSTALACION.txt
+
+¡Disfruta! 🚀
+
+════════════════════════════════════════════════════════════════════════════
+
+Versión: 1.0.0
+Fecha: 26 de Mayo de 2026
+Compatibilidad: Chrome 88+
+Estado: LISTO PARA USAR ✅
+
+════════════════════════════════════════════════════════════════════════════
