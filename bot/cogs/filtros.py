@@ -39,7 +39,7 @@ class FiltrosCog(commands.Cog, name="Filtros"):
 
     # ── Grupo de comandos /filtro ──────────────────────────────────────────────
 
-    filtro_group = app_commands.Group(
+    self.filtro_group = app_commands.Group(
         name="filtro",
         description="Comandos para gestionar filtros de contenido en feeds"
     )
