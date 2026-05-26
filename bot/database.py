@@ -88,6 +88,19 @@ async def init_db() -> None:
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
             """)
 
+            
+            # Crear tabla de sesiones de Instagram si no existe
+            await cur.execute("""
+                CREATE TABLE IF NOT EXISTS instaswift_ig_sessions (
+                    id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                    session_key VARCHAR(100) NOT NULL UNIQUE,
+                    session_data LONGTEXT NOT NULL,
+                    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                    INDEX idx_key (session_key)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+            """)
+
                         # Crear tabla de filtros si no existe
             await cur.execute("""
                 CREATE TABLE IF NOT EXISTS instaswift_filters (
@@ -491,4 +504,90 @@ async def delete_instagram_session(session_key: str = "main") -> bool:
         return True
     except Exception as e:
         log.error(f"[DB] Error eliminando sesión: {e}")
+        return False
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# Gestión de Sesiones de Instagram (sin archivos locales)
+# ══════════════════════════════════════════════════════════════════════════════
+
+async def save_instagram_session(session_key: str, session_data: str) -> bool:
+    """
+    Guarda la sesión de Instagram en la base de datos.
+    
+    Args:
+        session_key: Identificador único de la sesión (ej: 'main')
+        session_data: Contenido JSON de la sesión (resultado de dump_settings)
+    
+    Returns:
+        True si se guardó exitosamente
+    """
+    pool = _get_pool()
+    try:
+        async with pool.acquire() as conn:
+            async with conn.cursor() as cur:
+                await cur.execute("""
+                    INSERT INTO instaswift_ig_sessions (session_key, session_data)
+                    VALUES (%s, %s)
+                    ON DUPLICATE KEY UPDATE
+                        session_data = VALUES(session_data),
+                        updated_at = CURRENT_TIMESTAMP
+                """, (session_key, session_data))
+        log.debug(f"[DB] Sesion de Instagram guardada: {session_key}")
+        return True
+    except Exception as e:
+        log.error(f"[DB] Error guardando sesion: {e}")
+        return False
+
+
+async def load_instagram_session(session_key: str = "main") -> Optional[str]:
+    """
+    Carga la sesión de Instagram desde la base de datos.
+    
+    Args:
+        session_key: Identificador de la sesión a cargar
+    
+    Returns:
+        Contenido JSON de la sesión, o None si no existe/error
+    """
+    pool = _get_pool()
+    try:
+        async with pool.acquire() as conn:
+            async with conn.cursor() as cur:
+                await cur.execute(
+                    "SELECT session_data FROM instaswift_ig_sessions WHERE session_key = %s",
+                    (session_key,)
+                )
+                result = await cur.fetchone()
+                if result:
+                    log.debug(f"[DB] Sesion cargada: {session_key}")
+                    return result[0]
+        return None
+    except Exception as e:
+        log.error(f"[DB] Error cargando sesion: {e}")
+        return None
+
+
+async def delete_instagram_session(session_key: str = "main") -> bool:
+    """
+    Elimina la sesión de Instagram de la base de datos.
+    
+    Args:
+        session_key: Identificador de la sesión a eliminar
+    
+    Returns:
+        True si se eliminó exitosamente
+    """
+    pool = _get_pool()
+    try:
+        async with pool.acquire() as conn:
+            async with conn.cursor() as cur:
+                await cur.execute(
+                    "DELETE FROM instaswift_ig_sessions WHERE session_key = %s",
+                    (session_key,)
+                )
+        log.debug(f"[DB] Sesion eliminada: {session_key}")
+        return True
+    except Exception as e:
+        log.error(f"[DB] Error eliminando sesion: {e}")
         return False
