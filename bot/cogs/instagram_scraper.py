@@ -79,7 +79,7 @@ except ImportError as _instagrapi_err:
     MediaNotFound = ReloginAttemptExceeded = UserNotFound = Exception
     Media = UserShort = object  # type: ignore[misc,assignment]
 
-from bot.database import (
+from bot.database import save_instagram_session, load_instagram_session, delete_instagram_session
     get_all_active_feeds,
     is_already_posted,
     mark_as_posted,
@@ -97,7 +97,6 @@ log = logging.getLogger(__name__)
 # las recoge correctamente sin necesidad de un archivo .env.
 IG_USERNAME: str = os.getenv("IG_USERNAME", "").strip()
 IG_PASSWORD: str = os.getenv("IG_PASSWORD", "").strip()
-SESSION_PATH: Path = Path(os.getenv("SESSION_PATH", "ig_session.json").strip())
 
 # Intervalo de polling en minutos (por defecto cada 10 minutos)
 CHECK_INTERVAL: int = int(os.getenv("CHECK_INTERVAL", "10").strip() or "10")
@@ -167,14 +166,11 @@ class InstagramClient:
         """
         if not INSTAGRAPI_OK or self._cl is None:
             return False
-        if not SESSION_PATH.exists():
             return False
         try:
-            self._cl.load_settings(SESSION_PATH)
             # Verificar que la sesión cargada sigue siendo válida
             self._cl.get_timeline_feed()
             self._logged_in = True
-            log.info("[IG] ✅ Sesión restaurada desde %s", SESSION_PATH)
             return True
         except LoginRequired:
             log.warning("[IG] Sesión expirada, se necesita re-login.")
@@ -187,9 +183,6 @@ class InstagramClient:
         """Persiste la sesión actual en disco para futuros reinicios del bot."""
         if self._cl is None:
             return
-        SESSION_PATH.parent.mkdir(parents=True, exist_ok=True)
-        self._cl.dump_settings(SESSION_PATH)
-        log.debug("[IG] Sesión guardada en %s", SESSION_PATH)
 
     # ── Login ─────────────────────────────────────────────────────────────────────────────────────
 
@@ -235,7 +228,6 @@ class InstagramClient:
             # 1. Intentar restaurar sesion guardada
             restored = await loop.run_in_executor(None, self._load_session)
             if restored:
-                log.info("[Login] Sesion restaurada desde %s", SESSION_PATH)
                 return True
 
             # 2. Login fresco con credenciales
@@ -835,7 +827,6 @@ class InstagramScraperCog(commands.Cog, name="Instagram"):
                 description=f"Autenticado como **@{IG_USERNAME}**",
                 color=0x00B347,
             )
-            embed.add_field(name="Archivo de sesión", value=f"`{SESSION_PATH}`", inline=False)
             embed.add_field(name="Intervalo de scraping", value=f"{CHECK_INTERVAL} minutos", inline=True)
         else:
             embed = discord.Embed(
