@@ -68,7 +68,7 @@ class FeedsCog(commands.Cog, name="Feeds"):
 
     # ── /feed add ─────────────────────────────────────────────────────────────
 
-    @feed_group.command(
+    @self.feed_group.command(
         name="add",
         description="Suscribir un canal a las publicaciones de una cuenta de Instagram.",
     )
@@ -146,7 +146,7 @@ class FeedsCog(commands.Cog, name="Feeds"):
 
     # ── /feed remove ──────────────────────────────────────────────────────────
 
-    @feed_group.command(
+    @self.feed_group.command(
         name="remove",
         description="Dejar de seguir una cuenta de Instagram en un canal.",
     )
@@ -202,7 +202,7 @@ class FeedsCog(commands.Cog, name="Feeds"):
 
     # ── /feed list ────────────────────────────────────────────────────────────
 
-    @feed_group.command(
+    @self.feed_group.command(
         name="list",
         description="Ver todos los feeds activos de Instagram en este servidor.",
     )
@@ -237,7 +237,7 @@ class FeedsCog(commands.Cog, name="Feeds"):
 
     # ── /feed pause ───────────────────────────────────────────────────────────
 
-    @feed_group.command(
+    @self.feed_group.command(
         name="pause",
         description="Pausar temporalmente un feed (sin eliminar).",
     )
@@ -278,7 +278,7 @@ class FeedsCog(commands.Cog, name="Feeds"):
 
     # ── /feed resume ──────────────────────────────────────────────────────────
 
-    @feed_group.command(
+    @self.feed_group.command(
         name="resume",
         description="Reanudar un feed pausado.",
     )
@@ -474,4 +474,6 @@ class FeedsCog(commands.Cog, name="Feeds"):
 
 async def setup(bot: commands.Bot) -> None:
     """Registra el cog en el bot. Llamada automáticamente por load_extension()."""
-    await bot.add_cog(FeedsCog(bot))
+    cog = FeedsCog(bot)
+    bot.tree.add_command(cog.feed_group)
+    await bot.add_cog(cog)
