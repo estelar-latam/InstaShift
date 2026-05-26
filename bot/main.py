@@ -98,7 +98,6 @@ if _discord_token_check:
 else:
     log.critical("[ENV] DISCORD_TOKEN no encontrado. El bot no podra conectarse.")
 
-log.info("[ENV] SESSION_PATH   : %s", os.getenv("SESSION_PATH", "ig_session.json"))
 log.info("[ENV] CHECK_INTERVAL : %s minutos", os.getenv("CHECK_INTERVAL", "10"))
 log.info("[ENV] LOG_LEVEL      : %s", LOG_LEVEL)
 log.info("=" * 60)
