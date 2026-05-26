@@ -42,8 +42,16 @@ USER root
 # Environment defaults (override with docker run -e or .env)
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    DB_PATH=/app/instashift.db \
-    SESSION_PATH=/app/ig_session.json \
+# DB_PATH removido - usar variables de entorno DB_* para MySQL remoto
+# SESSION_PATH removido - sesiones se guardan en BD, no archivos locales
     LOG_LEVEL=INFO
 
 CMD ["python", "-m", "bot.main"]
+
+# ========================= NOTA SOBRE ALMACENAMIENTO ==========================
+# Este Dockerfile está optimizado para Railway (sin volúmenes persistentes).
+# Todos los datos se almacenan en:
+#   - Base de datos: MySQL remoto en Hostinger
+#   - Sesiones: Tabla instaswift_ig_sessions en la BD (sin archivos locales)
+# Esto asegura que el bot funcione correctamente en Railway y otros PaaS.
+# ============================================================================
