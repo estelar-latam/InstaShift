@@ -64,7 +64,7 @@ class FeedsCog(commands.Cog, name="Feeds"):
 
     # ── Grupo de comandos /feed ───────────────────────────────────────────────
 
-    feed_group = app_commands.Group(name="feed", description="Comandos para gestionar feeds de Instagram")
+    self.feed_group = app_commands.Group(name="feed", description="Comandos para gestionar feeds de Instagram")
 
     # ── /feed add ─────────────────────────────────────────────────────────────
 
