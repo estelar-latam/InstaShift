@@ -1,4 +1,4 @@
-"""
+h"""
 filtros.py – InstaShift
 =======================
 Comandos de slash para gestionar filtros en feeds de Instagram.
@@ -43,7 +43,7 @@ class FiltrosCog(commands.Cog, name="Filtros"):
 
     # ── Grupo de comandos /filtro ──────────────────────────────────────────────
 
-    filtro_group = app_commands.Group(
+    self.filtro_group = app_commands.Group(
         name="filtro",
         description="Comandos para gestionar filtros en feeds de Instagram"
     )
@@ -253,7 +253,6 @@ class FiltrosCog(commands.Cog, name="Filtros"):
 # ── Función de configuración del cog ──────────────────────────────────────────
 
 async def setup(bot: commands.Bot) -> None:
-    """Registra el cog en el bot. Llamada automáticamente por load_extension()."""
-    await bot.add_cog(FiltrosCog(bot))
-    # Registrar el command group en el árbol de comandos
-    bot.tree.add_command(FiltrosCog.filtro_group)
+    cog = FiltrosCog(bot)
+        await bot.add_cog(cog)
+bot.tree.add_command(FiltrosCog.filtro_group)
