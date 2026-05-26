@@ -474,7 +474,4 @@ class FeedsCog(commands.Cog, name="Feeds"):
 
 async def setup(bot: commands.Bot) -> None:
     """Registra el cog en el bot. Llamada automáticamente por load_extension()."""
-    cog = FeedsCog(bot)
-    # Registrar el grupo de comandos /feed
-    bot.tree.add_command(cog.feed_group)
-    await bot.add_cog(cog)
+    await bot.add_cog(FeedsCog(bot))

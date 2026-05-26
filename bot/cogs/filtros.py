@@ -214,6 +214,4 @@ class FiltrosCog(commands.Cog, name="Filtros"):
 
 async def setup(bot: commands.Bot) -> None:
     """Registra el cog en el bot. Llamada automáticamente por load_extension()."""
-    cog = FiltrosCog(bot)
-    bot.tree.add_command(cog.filtro_group)
-    await bot.add_cog(cog)
+    await bot.add_cog(FiltrosCog(bot))
